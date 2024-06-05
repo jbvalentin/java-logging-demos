@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>basic-logging</artifactId>
+    <packaging>pom</packaging>
+
+    <parent>
+        <artifactId>java-logging-demos</artifactId>
+        <groupId>org.github.jbvalentin</groupId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+
+    <modules>
+        <module>apache-commons-logging</module>
+        <module>apache-logging-log4j1x</module>
+        <module>apache-logging-log4j2</module>
+        <module>java-util-logging</module>
+        <module>logback-logging</module>
+        <module>slf4j-on-log4j2</module>
+        <module>slf4j-log4j-bridge</module>
+
+
+        <!-- TODO : slf4j avec log4j2, ...https://medium.com/@krishankantsinghal/logback-slf4j-log4j2-understanding-them-and-learn-how-to-use-d33deedd0c46 -->
+    </modules>
+
+</project>
+
