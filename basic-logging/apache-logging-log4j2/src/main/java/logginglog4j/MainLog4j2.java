@@ -13,12 +13,14 @@ public class MainLog4j2 {
 
 
     public static void doSomeLogging() {
-        LOGGER.trace("Here is a trace message");
+        Integer param = 15;
+        LOGGER.trace("Here is a trace message {}", param);
         LOGGER.debug("Here is a debug message");
         LOGGER.info("This is an info message");
-        LOGGER.warn("Here is a warning message");
+        LOGGER.warn("Here is a warning message: {}", param);
         LOGGER.error("This is an error message");
         LOGGER.fatal("Here is a fatal message");
+
 
         LOGGER.info(() -> "With a supplier");
     }

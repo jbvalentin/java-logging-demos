@@ -37,11 +37,11 @@
         <logback.version>1.3.7</logback.version>-->
         <!--
         Java 11 + Jakarta EE-->
-        <slf4j.version>2.0.7</slf4j.version>
-        <logback.version>1.4.11</logback.version>
+        <slf4j.version>2.0.17</slf4j.version>
+        <logback.version>1.5.18</logback.version>
 
         <log4j1.version>1.2.17</log4j1.version>
-        <log4j2.version>2.16.0</log4j2.version>
+        <log4j2.version>2.24.3</log4j2.version>
 
     </properties>
 
@@ -131,7 +131,7 @@
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
-                <artifactId>jul-over-slf4j</artifactId>
+                <artifactId>jul-to-slf4j</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
 

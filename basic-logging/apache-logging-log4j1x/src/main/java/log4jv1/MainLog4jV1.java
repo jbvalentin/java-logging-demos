@@ -22,11 +22,10 @@ public class MainLog4jV1 {
         Throwable t = null;
         try {
             List<String> s = new ArrayList<>();
-            s.get(5); // Va générer une IndexOutOfBoundsException
+            s.get(5); // Will throw IndexOutOfBoundsException
         } catch (Exception e) {
             t = e;
         }
-
 
 
         // Logging with log4j v1

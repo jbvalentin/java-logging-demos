@@ -10,6 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>logging-from-libraries</artifactId>
+    <name>logging-from-libraries</name>
+    <description></description>
 
     <dependencies>
         <dependency>
@@ -37,6 +39,17 @@
         <dependency>
             <groupId>org.github.jbvalentin</groupId>
             <artifactId>apache-logging-log4j1x</artifactId>
+            <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.github.jbvalentin</groupId>
+            <artifactId>java-util-logging</artifactId>
             <version>${project.version}</version>
             <exclusions>
                 <exclusion>
@@ -73,10 +86,15 @@
             <groupId>org.slf4j</groupId>
             <artifactId>log4j-over-slf4j</artifactId>
         </dependency>
-        <!-- Pour rediriger JCL version SLF4J -->
+        <!-- Pour rediriger JCL vers SLF4J -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+        <!-- Pour rediriger JUL vers SLF4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
         </dependency>
 
     </dependencies>

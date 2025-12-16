@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration>
+
+<configuration>
+    <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
+    <import class="ch.qos.logback.core.FileAppender"/>
+
+    <appender name="STDOUT" class="ConsoleAppender">
+        <encoder class="PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="JSON_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <!-- Ajoute la propriété @timestamp à la racine du JSON -->
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <!-- Ajoute la propriété @version à la racine du JSON -->
+                <version/>
+                <!-- Ajoute la propriété log.name à la racine du JSON (correspond au nom du logger slf4)
+                    Par défaut le nom de la variable est logger_name on change le nom pour matcher avec le fichier fields.yml de filebeat (ECS) -->
+                <loggerName>
+                    <fieldName>log.name</fieldName>
+                </loggerName>
+                <!-- Ajoute la propriété log.level à la racine du JSON (correspond au niveau log du logger slf4)
+                    Par défaut le nom de la variable est logger_level on change le nom pour matcher avec le fichier fields.yml de filebeat (ECS) -->
+                <logLevel>
+                    <fieldName>log.level</fieldName>
+                </logLevel>
+                <!-- Ajoute la propriété thread_name à la racine du JSON -->
+                <threadName/>
+                <!-- Ajoute la stack trace java dans la propriété error.stack_trace à la racine du JSON -->
+                <stackTrace>
+                    <fieldName>error.stack_trace</fieldName>
+                </stackTrace>
+                <!-- Ajoute la propriété message à la racine du JSON -->
+                <message/>
+                <!-- Ajoute les propriétés stockées dans le mdc sous le champ app du JSON -->
+                <mdc>
+                    <fieldName>app</fieldName>
+                    <!-- On exclut les propriétés qui sont utilisées dans la balise pattern -->
+                    <excludeMdcKeyName>duration</excludeMdcKeyName>
+                    <excludeMdcKeyName>correlationID</excludeMdcKeyName>
+                    <excludeMdcKeyName>eventId</excludeMdcKeyName>
+                </mdc>
+                <pattern>
+                    <!-- Permet de ne pas envoyer les champs vide -->
+                    <omitEmptyFields>true</omitEmptyFields>
+                    <!-- Ajout des champs custom à la racine du JSON -->
+                    <pattern>
+                        {
+                        "environment": "${ENV_FULL_NAME:-local}",
+                        "runtime": "${java.version}",
+                        "service": {
+                        "zone": "${AFU_ZONE}",
+                        "quartier": "${AFU_QUARTIER}",
+                        "bloc": "${AFU_BLOC}",
+                        "name": "${AFU_NOM_APPL}",
+                        "type": "${AFU_COMPONENT_KIND}",
+                        "version": "${VERSION:-unknown}",
+                        "commit": "${COMMIT:-unknown}",
+                        "branch": "${BRANCH:-unknown}",
+                        "build": "${BUILD:-0}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+        <file>${LOG_PATH:-/app/logs}/${AFU_NOM_APPL}-${AFU_COMPONENT_KIND}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <maxIndex>0</maxIndex>
+            <fileNamePattern>${AFU_NOM_APPL}-${AFU_COMPONENT_KIND}-log.%i</fileNamePattern>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>10MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+    <logger name="logback" level="WARN">
+
+    </logger>
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
+
+        <!--<configuration>
+            <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+                <encoder>
+                    <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+                </encoder>
+            </appender>
+        
+            <logger name="logback" level="WARN"></logger>
+        
+            <root level="debug">
+                <appender-ref ref="STDOUT"/>
+            </root>
+        
+        </configuration>-->
